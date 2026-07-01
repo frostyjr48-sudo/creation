@@ -1,0 +1,369 @@
+.analysis {
+    padding: 2.4rem;
+    height: 100%;
+    overflow-y: auto;
+    box-sizing: border-box;
+
+    &__header {
+        margin-bottom: 2rem;
+    }
+
+    &__title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--text-prominent);
+        margin: 0 0 0.6rem;
+    }
+
+    &__subtitle {
+        font-size: 1.4rem;
+        color: var(--text-general);
+        margin: 0;
+    }
+
+    // Tool tab switcher
+    &__tool-tabs {
+        display: flex;
+        gap: 0.8rem;
+        margin-bottom: 2.4rem;
+        flex-wrap: wrap;
+    }
+
+    &__tool-tab {
+        padding: 0.8rem 1.8rem;
+        border-radius: 6px;
+        border: 1px solid var(--general-section-2);
+        background: var(--general-section-1);
+        color: var(--text-general);
+        font-size: 1.3rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.18s ease;
+
+        &:hover {
+            border-color: #f7c53b;
+            color: var(--text-prominent);
+        }
+
+        &--active {
+            background: #f7c53b;
+            color: #0f172a;
+            border-color: #f7c53b;
+        }
+    }
+
+    // Individual tool card
+    &__tool {
+        background: var(--general-section-1);
+        border-radius: 10px;
+        border: 1px solid var(--general-section-2);
+        padding: 2.4rem;
+    }
+
+    &__tool-title {
+        font-size: 1.7rem;
+        font-weight: 700;
+        color: var(--text-prominent);
+        margin: 0 0 0.6rem;
+    }
+
+    &__tool-desc {
+        font-size: 1.3rem;
+        color: var(--text-general);
+        margin: 0 0 1.8rem;
+        line-height: 1.6;
+    }
+
+    // Shared input row
+    &__input-row {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        flex-wrap: wrap;
+        margin-bottom: 1.6rem;
+    }
+
+    &__input {
+        flex: 1;
+        min-width: 16rem;
+        padding: 0.8rem 1.2rem;
+        border-radius: 6px;
+        border: 1px solid var(--general-section-2);
+        background: var(--general-main-2);
+        color: var(--text-prominent);
+        font-size: 1.3rem;
+        outline: none;
+        transition: border-color 0.15s;
+
+        &:focus {
+            border-color: #f7c53b;
+        }
+
+        &--sm {
+            min-width: 10rem;
+            flex: 0 1 12rem;
+        }
+    }
+
+    &__btn {
+        padding: 0.8rem 1.6rem;
+        border-radius: 6px;
+        border: none;
+        font-size: 1.3rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background 0.18s ease, opacity 0.18s ease;
+        background: #f7c53b;
+        color: #0f172a;
+        white-space: nowrap;
+
+        &:hover {
+            background: #e6b535;
+        }
+
+        &--secondary {
+            background: var(--general-section-2);
+            color: var(--text-general);
+
+            &:hover {
+                background: var(--general-section-3, #cbd5e1);
+            }
+        }
+
+        &--win {
+            background: #10b981;
+            color: #fff;
+
+            &:hover {
+                background: #059669;
+            }
+        }
+
+        &--loss {
+            background: #ef4444;
+            color: #fff;
+
+            &:hover {
+                background: #dc2626;
+            }
+        }
+    }
+
+    &__count-label {
+        font-size: 1.2rem;
+        color: var(--text-less-prominent);
+        margin: 0 0 1.2rem;
+    }
+
+    // Bar chart (digit frequency)
+    &__bar-chart {
+        display: flex;
+        align-items: flex-end;
+        gap: 0.8rem;
+        height: 16rem;
+        padding-top: 2rem;
+    }
+
+    &__bar-col {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex: 1;
+        height: 100%;
+        position: relative;
+    }
+
+    &__bar-pct {
+        font-size: 1rem;
+        color: var(--text-less-prominent);
+        margin-bottom: 0.4rem;
+    }
+
+    &__bar-wrap {
+        flex: 1;
+        width: 100%;
+        display: flex;
+        align-items: flex-end;
+        background: var(--general-section-2);
+        border-radius: 4px 4px 0 0;
+    }
+
+    &__bar {
+        width: 100%;
+        background: #f7c53b;
+        border-radius: 4px 4px 0 0;
+        transition: height 0.3s ease;
+        min-height: 2px;
+    }
+
+    &__bar-label {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--text-prominent);
+        margin-top: 0.4rem;
+    }
+
+    &__bar-count {
+        font-size: 1.1rem;
+        color: var(--text-less-prominent);
+    }
+
+    // Win/Loss stats row
+    &__stats-row {
+        display: flex;
+        gap: 1.2rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+    }
+
+    &__stat {
+        flex: 1;
+        min-width: 8rem;
+        background: var(--general-section-2);
+        border-radius: 8px;
+        padding: 1.2rem 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.4rem;
+    }
+
+    &__stat-value {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--text-prominent);
+
+        &--win { color: #10b981; }
+        &--loss { color: #ef4444; }
+    }
+
+    &__stat-label {
+        font-size: 1.1rem;
+        color: var(--text-less-prominent);
+        text-align: center;
+    }
+
+    // Trade history
+    &__history-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--text-prominent);
+        margin: 0 0 0.8rem;
+    }
+
+    &__history-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+        max-height: 24rem;
+        overflow-y: auto;
+    }
+
+    &__history-row {
+        display: flex;
+        align-items: center;
+        gap: 1.2rem;
+        padding: 0.8rem 1.2rem;
+        border-radius: 6px;
+        font-size: 1.3rem;
+        color: var(--text-general);
+
+        &--win { background: rgb(16 185 129 / 10%); border-left: 3px solid #10b981; }
+        &--loss { background: rgb(239 68 68 / 10%); border-left: 3px solid #ef4444; }
+    }
+
+    &__history-badge {
+        font-size: 1.1rem;
+        font-weight: 700;
+        padding: 0.2rem 0.6rem;
+        border-radius: 4px;
+
+        .analysis__history-row--win & {
+            background: #10b981;
+            color: #fff;
+        }
+
+        .analysis__history-row--loss & {
+            background: #ef4444;
+            color: #fff;
+        }
+    }
+
+    &__history-time {
+        margin-left: auto;
+        font-size: 1.1rem;
+        color: var(--text-less-prominent);
+    }
+
+    // Stake calculator
+    &__calc-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+        gap: 1.2rem;
+        margin-bottom: 2rem;
+    }
+
+    &__label {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+        font-size: 1.3rem;
+        color: var(--text-general);
+
+        .analysis__input { flex: unset; min-width: unset; }
+    }
+
+    &__calc-base {
+        font-size: 1.4rem;
+        color: var(--text-general);
+        margin: 0 0 1.2rem;
+    }
+
+    &__steps {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    &__step-row {
+        display: flex;
+        align-items: center;
+        gap: 1.2rem;
+        font-size: 1.3rem;
+        color: var(--text-general);
+    }
+
+    &__step-num {
+        min-width: 5rem;
+        font-weight: 600;
+        color: var(--text-prominent);
+    }
+
+    &__step-bar-wrap {
+        flex: 1;
+        height: 0.8rem;
+        background: var(--general-section-2);
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+    &__step-bar {
+        height: 100%;
+        background: #f7c53b;
+        border-radius: 4px;
+        transition: width 0.3s ease;
+    }
+
+    &__step-val {
+        min-width: 6rem;
+        text-align: right;
+        font-weight: 700;
+        color: var(--text-prominent);
+    }
+
+    &__step-warn {
+        font-size: 1.1rem;
+        color: #ef4444;
+        white-space: nowrap;
+    }
+}

@@ -66,8 +66,14 @@ export default defineConfig({
         GD_CLIENT_ID: JSON.stringify(process.env.GD_CLIENT_ID),
         GD_APP_ID: JSON.stringify(process.env.GD_APP_ID),
         GD_API_KEY: JSON.stringify(process.env.GD_API_KEY),
+        // Explicit NODE_ENV so browser code reading process.env.NODE_ENV gets the
+        // correct value rather than undefined (replacing the whole process.env object
+        // with a literal means any unlisted key becomes undefined otherwise).
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV ?? 'development'),
       },
     },
+  },
+  resolve: {
     alias: {
       // Resolve from wherever the package actually lives so the build works
       // both standalone and inside the monorepo (npm workspaces hoist react to

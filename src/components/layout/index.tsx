@@ -7,6 +7,7 @@ import { api_base } from '@/external/bot-skeleton';
 import { useStore } from '@/hooks/useStore';
 import { useDevice } from '@deriv-com/ui';
 import { crypto_currencies_display_order, fiat_currencies_display_order } from '../shared';
+import AiScanner from '@/components/ai-scanner';
 import Footer from './footer';
 import AppHeader from './header';
 import Body from './main-body';
@@ -154,6 +155,7 @@ const Layout = observer(() => {
                 <Outlet />
             </Body>
             {!isCallbackPage && isDesktop && <Footer />}
+            {!isCallbackPage && <AiScanner />}
         </div>
     );
 });

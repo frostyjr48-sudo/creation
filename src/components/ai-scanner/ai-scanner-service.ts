@@ -5,22 +5,20 @@
  * synthetic-digits market, and scores them for the selected strategy.
  */
 import DerivAPIBasic from '@deriv/deriv-api/dist/DerivAPIBasic';
-
-const APP_ID = process.env.NEXT_PUBLIC_DERIV_APP_ID || '36544';
-const WS_URL = `wss://ws.derivws.com/websockets/v3?app_id=${APP_ID}`;
+import { getSocketURL } from '@/components/shared';
 
 // ─── constants ────────────────────────────────────────────────────────────────
 
 export const SCAN_SYMBOLS = [
-    { symbol: 'R_10', name: 'Volatility 10' },
-    { symbol: 'R_25', name: 'Volatility 25' },
-    { symbol: 'R_50', name: 'Volatility 50' },
-    { symbol: 'R_75', name: 'Volatility 75' },
-    { symbol: 'R_100', name: 'Volatility 100' },
-    { symbol: '1HZ10V', name: 'Volatility 10 (1s)' },
-    { symbol: '1HZ25V', name: 'Volatility 25 (1s)' },
-    { symbol: '1HZ50V', name: 'Volatility 50 (1s)' },
-    { symbol: '1HZ75V', name: 'Volatility 75 (1s)' },
+    { symbol: 'R_10',    name: 'Volatility 10' },
+    { symbol: 'R_25',    name: 'Volatility 25' },
+    { symbol: 'R_50',    name: 'Volatility 50' },
+    { symbol: 'R_75',    name: 'Volatility 75' },
+    { symbol: 'R_100',   name: 'Volatility 100' },
+    { symbol: '1HZ10V',  name: 'Volatility 10 (1s)' },
+    { symbol: '1HZ25V',  name: 'Volatility 25 (1s)' },
+    { symbol: '1HZ50V',  name: 'Volatility 50 (1s)' },
+    { symbol: '1HZ75V',  name: 'Volatility 75 (1s)' },
     { symbol: '1HZ100V', name: 'Volatility 100 (1s)' },
 ];
 
@@ -109,6 +107,48 @@ function scoreMarket(
     }
 }
 
+// ─── WebSocket connection helper ──────────────────────────────────────────────
+
+/**
+ * Opens a fresh WebSocket, waits for it to be ready, then wraps it in
+ * DerivAPIBasic — the same pattern used throughout the rest of the app.
+ */
+function openConnection(wsURL: string, timeoutMs = 15_000): Promise<{
+    api: InstanceType<typeof DerivAPIBasic>;
+    ws: WebSocket;
+}> {
+    return new Promise((resolve, reject) => {
+        let settled = false;
+
+        const ws = new WebSocket(wsURL);
+        const api = new DerivAPIBasic({ connection: ws });
+
+        const timer = setTimeout(() => {
+            if (!settled) {
+                settled = true;
+                ws.close();
+                reject(new Error('[AiScanner] WebSocket connection timed out'));
+            }
+        }, timeoutMs);
+
+        ws.addEventListener('open', () => {
+            if (!settled) {
+                settled = true;
+                clearTimeout(timer);
+                resolve({ api, ws });
+            }
+        });
+
+        ws.addEventListener('error', (err) => {
+            if (!settled) {
+                settled = true;
+                clearTimeout(timer);
+                reject(err);
+            }
+        });
+    });
+}
+
 // ─── main scan ────────────────────────────────────────────────────────────────
 
 /**
@@ -122,7 +162,10 @@ export async function scanMarkets(
     onProgress: (p: ScanProgress) => void,
     signal?: AbortSignal
 ): Promise<ScanResult[]> {
-    const api = new DerivAPIBasic({ endpoint: WS_URL });
+    // Resolve the correct WebSocket URL (respects auth / app-id config)
+    const wsURL = await getSocketURL();
+
+    const { api, ws } = await openConnection(wsURL);
     const results: ScanResult[] = [];
 
     try {
@@ -146,16 +189,13 @@ export async function scanMarkets(
                 const digitCounts = buildDigitCounts(digits);
 
                 results.push({ symbol, name, score, tradeType, percentage, digitCounts });
-            } catch {
-                // Symbol unavailable or request failed — skip silently
+            } catch (err) {
+                // eslint-disable-next-line no-console
+                console.warn(`[AiScanner] Failed to fetch ${symbol}:`, err);
             }
         }
     } finally {
-        try {
-            (api as any).disconnect();
-        } catch {
-            // ignore disconnect errors
-        }
+        try { ws.close(); } catch { /* ignore */ }
     }
 
     return results.sort((a, b) => b.score - a.score);

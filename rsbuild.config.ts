@@ -120,6 +120,7 @@ export default defineConfig({
     compress: true,
     host: '0.0.0.0',
     port: 5000,
+    strictPort: true,
     allowedHosts: 'all',
   },
   dev: { hmr: true },

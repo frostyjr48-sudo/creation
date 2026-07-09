@@ -19,7 +19,7 @@ window.Blockly.Blocks.purchase = {
                     options: [['', '']],
                 },
             ],
-            message1: localize('Allow Bulk Purchase: %1  No. of Trades: %2'),
+            message1: localize('Allow Bulk Purchase: %1'),
             args1: [
                 {
                     type: 'field_dropdown',
@@ -29,11 +29,14 @@ window.Blockly.Blocks.purchase = {
                         [localize('Yes'), 'yes'],
                     ],
                 },
+            ],
+            message2: localize('No. of Trades: %1'),
+            args2: [
                 {
                     type: 'field_number',
                     name: 'BULK_COUNT',
-                    value: 2,
-                    min: 2,
+                    value: 1,
+                    min: 1,
                     max: 50,
                     precision: 1,
                 },

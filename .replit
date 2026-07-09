@@ -27,7 +27,7 @@ outputType = "webview"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "pnpm run dev"
+args = "node node_modules/@rsbuild/core/bin/rsbuild.js dev"
 waitForPort = 5000
 
 [[ports]]

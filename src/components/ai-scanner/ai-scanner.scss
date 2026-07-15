@@ -16,22 +16,12 @@
     width: 7.2rem;
     height: 7.2rem;
     border-radius: 50%;
-    border: none;
-    // The conic gradient rotates via a CSS animation on the element itself
-    background: conic-gradient(
-        from var(--ai-angle, 0deg),
-        #fde68a 0deg,
-        #f59e0b 60deg,
-        #d97706 120deg,
-        #f59e0b 180deg,
-        #fbbf24 240deg,
-        #d97706 300deg,
-        #fde68a 360deg
-    );
+    // Same dark gold-card theme used across the dashboard feature cards
+    border: 1.5px solid rgb(247 197 59 / 50%);
+    background: linear-gradient(150deg, #241c09 0%, #14100a 100%);
     box-shadow:
-        0 0 0 4px rgba(245, 158, 11, 0.22),
-        0 0 28px 8px rgba(245, 158, 11, 0.55),
-        0 8px 32px rgba(0, 0, 0, 0.5);
+        0 4px 14px rgb(0 0 0 / 25%),
+        0 0 18px rgb(247 197 59 / 35%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -39,33 +29,32 @@
     z-index: 1500;
     touch-action: none;
     padding: 0;
-    overflow: visible;
-    // Bounce + spin compound animation
+    overflow: hidden;
     animation:
-        ai-bounce   1.8s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite,
-        ai-ring-spin 3s linear infinite;
+        ai-bounce      1.8s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite,
+        gold-pulse-glow 2.6s ease-in-out infinite;
 
+    // Same diagonal shimmer sweep used on the feature-showcase cards
     &::before {
         content: '';
         position: absolute;
-        inset: 4px;
+        inset: 0;
         border-radius: 50%;
-        background: radial-gradient(circle at 38% 30%, #ffe9a8 0%, #fbbf24 30%, #d97706 65%, #7c4a05 100%);
-        box-shadow:
-            inset 0 0 18px 4px rgba(255, 236, 168, 0.9),
-            inset 0 0 40px 10px rgba(245, 158, 11, 0.85);
-        animation: ai-inner-glow 2s ease-in-out infinite alternate;
+        background: linear-gradient(105deg, transparent 35%, rgb(255 235 150 / 25%) 50%, transparent 65%);
+        background-size: 220% 100%;
+        animation: gold-shimmer 2.8s ease-in-out infinite;
         z-index: 0;
+        pointer-events: none;
     }
 
     // Gloss highlight
     &::after {
         content: '';
         position: absolute;
-        inset: 4px;
+        inset: 0;
         border-radius: 50%;
         background: linear-gradient(145deg,
-            rgba(253, 230, 138, 0.22) 0%,
+            rgba(247, 197, 59, 0.18) 0%,
             transparent 55%
         );
         z-index: 1;
@@ -81,29 +70,28 @@
         line-height: 1;
         pointer-events: none;
         user-select: none;
-        color: #2a1400;
-        text-shadow:
-            0 0 6px rgba(255, 249, 219, 0.95),
-            0 0 14px rgba(255, 214, 100, 0.9),
-            0 1px 1px rgba(0, 0, 0, 0.35);
+        color: #fff8d6;
+        text-shadow: 0 0 8px rgb(247 197 59 / 60%);
         animation: ai-text-glow 2.2s ease-in-out infinite alternate;
     }
 
     &:active { cursor: grabbing; }
 
     &:hover {
+        border-color: rgb(255 220 110 / 90%);
         box-shadow:
-            0 0 0 5px rgba(245, 158, 11, 0.4),
-            0 0 40px 12px rgba(245, 158, 11, 0.75),
-            0 10px 40px rgba(0, 0, 0, 0.55);
-        animation-play-state: paused; // freeze spin+bounce on hover for control
+            0 8px 28px rgb(0 0 0 / 45%),
+            0 0 30px rgb(247 197 59 / 65%),
+            0 0 54px rgb(247 197 59 / 30%);
+        animation-play-state: paused; // freeze bounce/pulse on hover for control
     }
 
     &--active {
+        border-color: rgb(255 220 110 / 90%);
         box-shadow:
-            0 0 0 6px rgba(245, 158, 11, 0.45),
-            0 0 44px 14px rgba(245, 158, 11, 0.7),
-            0 8px 32px rgba(0, 0, 0, 0.55);
+            0 8px 28px rgb(0 0 0 / 45%),
+            0 0 30px rgb(247 197 59 / 65%),
+            0 0 54px rgb(247 197 59 / 30%);
     }
 
     &__dot {
@@ -138,11 +126,6 @@
 
 // ── Animations ────────────────────────────────────────────────────────────────
 
-@keyframes ai-ring-spin {
-    from { filter: hue-rotate(0deg);   }
-    to   { filter: hue-rotate(30deg);  } // subtle hue drift on the gold
-}
-
 // Bouncy vertical bob
 @keyframes ai-bounce {
     0%, 100% { transform: translateY(0)     scale(1);    }
@@ -157,22 +140,6 @@
 @keyframes ai-text-glow {
     0%   { filter: drop-shadow(0 0 2px rgba(255, 249, 219, 0.5)); }
     100% { filter: drop-shadow(0 0 10px rgba(255, 214, 100, 1)); }
-}
-
-// Inner golden core breathing glow
-@keyframes ai-inner-glow {
-    0% {
-        box-shadow:
-            inset 0 0 14px 3px rgba(255, 236, 168, 0.75),
-            inset 0 0 30px 8px rgba(245, 158, 11, 0.7);
-        filter: brightness(1);
-    }
-    100% {
-        box-shadow:
-            inset 0 0 24px 6px rgba(255, 249, 219, 1),
-            inset 0 0 52px 14px rgba(245, 158, 11, 0.95);
-        filter: brightness(1.15);
-    }
 }
 
 // Wave rings expand outward and fade

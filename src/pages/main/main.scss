@@ -94,21 +94,21 @@
             }
 
             &__active {
-                background: linear-gradient(150deg, #241c09 0%, #14100a 100%);
+                background: linear-gradient(150deg, #2f2510 0%, #1a140a 100%);
                 color: #fff8d6 !important;
-                text-shadow: 0 0 8px rgb(247 197 59 / 45%);
+                text-shadow: 0 0 10px rgb(247 197 59 / 55%);
 
                 svg {
                     fill: #f7c53b;
-                    filter: drop-shadow(0 0 5px rgb(247 197 59 / 55%));
+                    filter: drop-shadow(0 0 6px rgb(247 197 59 / 65%));
                 }
             }
 
             &__list {
-                background: linear-gradient(150deg, #211a08 0%, #14100a 100%);
-                border: 1.5px solid rgb(247 197 59 / 30%);
+                background: linear-gradient(150deg, #2c2210 0%, #1a140a 100%);
+                border: 1.5px solid rgb(247 197 59 / 45%);
                 border-radius: 1rem 1rem 0 0;
-                box-shadow: 0 4px 14px rgb(0 0 0 / 25%), 0 0 14px rgb(247 197 59 / 18%);
+                box-shadow: 0 4px 16px rgb(0 0 0 / 25%), 0 0 20px rgb(247 197 59 / 30%);
                 justify-content: flex-start;
                 flex-wrap: nowrap;
                 overflow-x: auto;
@@ -200,7 +200,7 @@
                 transition: background 0.25s ease, color 0.25s ease;
 
                 &:hover {
-                    background: rgb(247 197 59 / 8%);
+                    background: rgb(247 197 59 / 12%);
                     color: #fff8d6;
                 }
 
